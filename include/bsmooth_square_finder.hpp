@@ -1,0 +1,6 @@
+#ifndef BSMOOTH_SQUARE_FINDER_HPP
+#define BSMOOTH_SQUARE_FINDER_HPP
+
+
+
+#endif
