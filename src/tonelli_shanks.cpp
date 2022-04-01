@@ -1,10 +1,12 @@
 #include "tonelli_shanks.hpp"
 
-QuadraticResidue tonelliShanks(std::uint64_t n, std::uint64_t p) {
-    std::uint64_t q = p - 1;
-    std::uint64_t ss = 0;
-    std::uint64_t z = 2;
-    std::uint64_t c, r, t, m;
+QuadraticResidue::QuadraticResidue(const mpz_class &root1, const mpz_class &root2, bool exists) : root1(root1), root2(root2), exists(exists) {}
+
+QuadraticResidue tonelliShanks(const mpz_class &n, const mpz_class &p) {
+    mpz_class q = p - 1;
+    mpz_class ss = 0;
+    mpz_class z = 2;
+    mpz_class c, r, t, m;
  
     if (powerMod(n, (p - 1) / 2, p) != 1) {
         return QuadraticResidue(0, 0, false);
@@ -16,7 +18,7 @@ QuadraticResidue tonelliShanks(std::uint64_t n, std::uint64_t p) {
     }
  
     if (ss == 1) {
-        std::uint64_t r1 = powerMod(n, (p + 1) / 4, p);
+        mpz_class r1 = powerMod(n, (p + 1) / 4, p);
         return QuadraticResidue(r1, p - r1, true);
     }
  
@@ -30,8 +32,8 @@ QuadraticResidue tonelliShanks(std::uint64_t n, std::uint64_t p) {
     m = ss;
  
     while (true) {
-        std::uint64_t i = 0, zz = t;
-        std::uint64_t b = c, e;
+        mpz_class i = 0, zz = t;
+        mpz_class b = c, e;
         if (t == 1) {
             return QuadraticResidue(r, p - r, true);
         }
