@@ -1,18 +1,18 @@
 #ifndef TONELLI_SHANKS_HPP
 #define TONELLI_SHANKS_HPP
 
-#include <gmpxx.h>
+#include "common.hpp"
 #include "util.hpp"
 
 // Courtesy of https://rosettacode.org/wiki/Tonelli-Shanks_algorithm#C
-struct QuadraticResidue {
-	mpz_class root1;
-    mpz_class root2;
+struct QuadraticResidueSquareRoot {
+	bmp::mpz_int root1;
+    bmp::mpz_int root2;
     bool exists;
 
-	QuadraticResidue(const mpz_class &root1, const mpz_class &root2, bool exists);
+	QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists);
 };
  
-QuadraticResidue tonelliShanks(const mpz_class &n, const mpz_class &p);
+QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, const bmp::mpz_int &p);
 
 #endif

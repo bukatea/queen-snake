@@ -1,15 +1,16 @@
 #include "tonelli_shanks.hpp"
 
-QuadraticResidue::QuadraticResidue(const mpz_class &root1, const mpz_class &root2, bool exists) : root1(root1), root2(root2), exists(exists) {}
+QuadraticResidueSquareRoot::QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists) : root1(root1), root2(root2), exists(exists) {}
 
-QuadraticResidue tonelliShanks(const mpz_class &n, const mpz_class &p) {
-    mpz_class q = p - 1;
-    mpz_class ss = 0;
-    mpz_class z = 2;
-    mpz_class c, r, t, m;
+QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p) {
+    std::size_t q = p - 1;
+    std::size_t ss = 0;
+    bmp::mpz_int z = 2;
+    bmp::mpz_int c, r, t;
+    std::size_t m;
  
-    if (powerMod(n, (p - 1) / 2, p) != 1) {
-        return QuadraticResidue(0, 0, false);
+    if (bmp::powm(n, (p - 1) / 2, p) != 1) {
+        return QuadraticResidueSquareRoot(0, 0, false);
     }
  
     while ((q & 1) == 0) {
@@ -18,30 +19,31 @@ QuadraticResidue tonelliShanks(const mpz_class &n, const mpz_class &p) {
     }
  
     if (ss == 1) {
-        mpz_class r1 = powerMod(n, (p + 1) / 4, p);
-        return QuadraticResidue(r1, p - r1, true);
+        bmp::mpz_int r1 = bmp::powm(n, (p + 1) / 4, p);
+        return QuadraticResidueSquareRoot(r1, p - r1, true);
     }
  
-    while (powerMod(z, (p - 1) / 2, p) != p - 1) {
+    while (bmp::powm(z, (p - 1) / 2, p) != p - 1) {
         z++;
     }
  
-    c = powerMod(z, q, p);
-    r = powerMod(n, (q + 1) / 2, p);
-    t = powerMod(n, q, p);
+    c = bmp::powm(z, q, p);
+    r = bmp::powm(n, (q + 1) / 2, p);
+    t = bmp::powm(n, q, p);
     m = ss;
  
     while (true) {
-        mpz_class i = 0, zz = t;
-        mpz_class b = c, e;
+        std::size_t i = 0;
+        bmp::mpz_int zz = t;
+        bmp::mpz_int b = c;
         if (t == 1) {
-            return QuadraticResidue(r, p - r, true);
+            return QuadraticResidueSquareRoot(r, p - r, true);
         }
         while (zz != 1 && i < (m - 1)) {
             zz = zz * zz % p;
             i++;
         }
-        e = m - i - 1;
+        std::size_t e = m - i - 1;
         while (e > 0) {
             b = b * b % p;
             e--;
