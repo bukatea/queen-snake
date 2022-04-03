@@ -1,2 +1,2 @@
 # queen-snake
-damsel that will put you in distress
+a damsel that will put you in distress

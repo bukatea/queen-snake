@@ -6,11 +6,11 @@
 
 // Courtesy of https://rosettacode.org/wiki/Tonelli-Shanks_algorithm#C
 struct QuadraticResidueSquareRoot {
-	bmp::mpz_int root1;
+    bmp::mpz_int root1;
     bmp::mpz_int root2;
     bool exists;
 
-	QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists);
+    QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists);
 };
  
 QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, const bmp::mpz_int &p);
