@@ -1,0 +1,31 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 15,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Default configure using 'Unix Makefiles' generator",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {},
+            "toolchainFile": "/Users/jonathanlee/queen-snake/cmake-build-release/conan/conan_toolchain.cmake",
+            "binaryDir": "/Users/jonathanlee/queen-snake/cmake-build-release"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default"
+        }
+    ]
+}

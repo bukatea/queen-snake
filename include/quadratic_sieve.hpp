@@ -5,6 +5,6 @@
 
 #include "common.hpp"
 
-std::vector<mpz_class> quadraticSieve(const bmp::mpz_int &n, std::size_t B, bool incrementalChecking);
+std::vector<bmp::mpz_int> quadraticSieve(const bmp::mpz_int &n, std::size_t B, bool incrementalChecking);
 
 #endif
