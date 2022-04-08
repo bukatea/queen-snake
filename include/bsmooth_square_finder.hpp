@@ -15,12 +15,22 @@ struct BSmoothSquare {
     BSmoothSquare(const bmp::mpz_int &x, const std::vector<std::size_t> &primeFactors);
 };
 
+struct BSmoothSolution {
+    // should be 0 if p^k does not divide n (this is most cases)
+    // otherwise will be the divisor of n (this is good, but will be very infrequent)
+    bmp::mpz_int nDivisor;
+    // size is numBSmoothSquares
+    std::vector<BSmoothSquare> bSmoothSquares;
+
+    BSmoothSolution(const bmp::mpz_int &nDivisor, const std::vector<BSmoothSquare> &bSmoothSquares);
+};
+
 // add support for multiple finds
 class BSmoothSquareFinder {
     public:
         BSmoothSquareFinder(const bmp::mpz_int &n, const std::vector<std::size_t> &factorBase, std::size_t A);
 
-        std::vector<BSmoothSquare> find(std::size_t numBSmoothSquares);
+        BSmoothSolution find(std::size_t numBSmoothSquares);
 
     private:
         static const bmp::mpf_float ERROR = "0.000000000000000000000000000000000000000000000000005"
@@ -29,6 +39,7 @@ class BSmoothSquareFinder {
         bmp::mpz_int s;
         std::vector<std::size_t> factorBase;
         std::size_t piB;
+        std::size_t iterations;
         std::size_t A;
 
         std::vector<bmp::mpf_float_50> sieve;

@@ -5,7 +5,7 @@
 #include "quadratic_sieve.hpp"
 
 int main() {
-    const std::vector<bmp::mpz_int> numbers = {
+    const std::vector<bmp::mpz_int> numbers{
         "16921456439215439701",
         "46839566299936919234246726809",
         "6172835808641975203638304919691358469663",
@@ -13,10 +13,11 @@ int main() {
     };
 
     for (const bmp::mpz_int &number : numbers) {
-        // TODO: initialize B
+        // TODO: initialize A, B
+        std::size_t A;
         std::size_t B;
         auto startTime = std::chrono::high_resolution_clock::now();
-        std::vector<bmp::mpz_int> factors = quadraticSieve(number, B, true);
+        std::vector<bmp::mpz_int> factors = quadraticSieve(number, A, B, true);
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "The factors of " << number << " are" << std::endl;
         for (const bmp::mpz_int &factor : factors) {
