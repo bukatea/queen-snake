@@ -6,18 +6,18 @@
 
 int main() {
     const std::vector<bmp::mpz_int> numbers{
-        "16921456439215439701",
-        "46839566299936919234246726809",
-        "6172835808641975203638304919691358469663",
-        "3744843080529615909019181510330554205500926021947"
+        bmp::mpz_int{"16921456439215439701"},
+        bmp::mpz_int{"46839566299936919234246726809"},
+        bmp::mpz_int{"6172835808641975203638304919691358469663"},
+        bmp::mpz_int{"3744843080529615909019181510330554205500926021947"}
     };
 
     for (const bmp::mpz_int &number : numbers) {
         // TODO: initialize A, B
-        std::size_t A;
-        std::size_t B;
+        std::size_t A = static_cast<std::size_t>(bmp::ceil(bmp::pow(static_cast<bmp::mpf_float>(number), 0.25)));
+        std::size_t B = static_cast<std::size_t>(bmp::ceil(bmp::exp(0.5 * bmp::sqrt((bmp::log(static_cast<bmp::mpf_float>(number)) * bmp::log(bmp::log(static_cast<bmp::mpf_float>(number))))))));
         auto startTime = std::chrono::high_resolution_clock::now();
-        std::vector<bmp::mpz_int> factors = quadraticSieve(number, A, B, true);
+        std::vector<bmp::mpz_int> factors = quadraticSieve(number, A, B);
         auto endTime = std::chrono::high_resolution_clock::now();
         std::cout << "The factors of " << number << " are" << std::endl;
         for (const bmp::mpz_int &factor : factors) {

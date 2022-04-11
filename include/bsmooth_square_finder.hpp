@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cstdint>
+#include <Eigen/Dense>
 
 #include "common.hpp"
 #include "tonelli_shanks.hpp"
@@ -10,9 +11,9 @@
 struct BSmoothSquare {
     bmp::mpz_int x;
     // size is piB
-    std::vector<std::size_t> primeFactors;
+    std::vector<int> primeFactors;
 
-    BSmoothSquare(const bmp::mpz_int &x, const std::vector<std::size_t> &primeFactors);
+    BSmoothSquare(const bmp::mpz_int &x, const std::vector<int> &primeFactors);
 };
 
 struct BSmoothSolution {
@@ -21,8 +22,9 @@ struct BSmoothSolution {
     bmp::mpz_int nDivisor;
     // size is numBSmoothSquares
     std::vector<BSmoothSquare> bSmoothSquares;
+    Eigen::MatrixXi exponentMatrix;
 
-    BSmoothSolution(const bmp::mpz_int &nDivisor, const std::vector<BSmoothSquare> &bSmoothSquares);
+    BSmoothSolution(const bmp::mpz_int &nDivisor, const std::vector<BSmoothSquare> &bSmoothSquares, const Eigen::MatrixXi &exponentMatrix);
 };
 
 // add support for multiple finds
@@ -33,8 +35,6 @@ class BSmoothSquareFinder {
         BSmoothSolution find(std::size_t numBSmoothSquares);
 
     private:
-        static const bmp::mpf_float ERROR = "0.000000000000000000000000000000000000000000000000005"
-
         bmp::mpz_int n;
         bmp::mpz_int s;
         std::vector<std::size_t> factorBase;
@@ -44,7 +44,11 @@ class BSmoothSquareFinder {
 
         std::vector<bmp::mpf_float_50> sieve;
         std::vector<std::size_t> primeExponentsLeqA;
-        std::vector<std::vector<std::size_t>> primeFactors;
+        std::vector<std::vector<int>> primeFactors;
+        std::vector<Eigen::VectorXi> primeFactorsMod2;
+
+        std::size_t currentCol;
+        Eigen::MatrixXi exponentMatrix;
 };
 
 #endif
