@@ -13,6 +13,6 @@ struct QuadraticResidueSquareRoot {
     QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists);
 };
  
-QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, const bmp::mpz_int &p);
+QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p);
 
 #endif
