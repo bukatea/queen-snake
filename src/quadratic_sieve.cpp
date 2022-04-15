@@ -10,37 +10,38 @@ std::vector<bmp::mpz_int> quadraticSieve(const bmp::mpz_int &n, std::size_t A, s
     if (solution.nDivisor != 0) {
         return std::vector<bmp::mpz_int>{solution.nDivisor, n / solution.nDivisor};
     }
-    if (solution.bSmoothSquares.size() < required) {
-        std::cout << "fuck" << std::endl;
-        return std::vector<bmp::mpz_int>{};
-    } else {
-        Eigen::MatrixXf ker = solution.exponentMod2Matrix.cast<float>().fullPivLu().kernel();
-        Eigen::VectorXf firstSolution = ker.col(0);
-
+    Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> linDependencies = mod2Echelonize(solution.exponentMod2Matrix);
+    for (std::size_t i = 0; i < linDependencies.rows(); i++) {
         bmp::mpz_int x = 1;
-        std::size_t i = 0;
+        std::size_t j = 0;
         Eigen::VectorXi newExponents = Eigen::VectorXi::Zero(piB);
-        for (auto val : firstSolution) {
+        for (auto val : linDependencies.row(i)) {
             if (val != 0) {
-                newExponents += solution.exponentMatrix.col(i);
-                x *= solution.bSmoothSquares[i];
+                newExponents += solution.exponentMatrix.row(j);
+                x *= solution.bSmoothSquares[j];
+                x %= n;
             }
-            i++;
+            j++;
         }
 
         newExponents /= 2;
         bmp::mpz_int y = 1;
-        i = 0;
+        j = 0;
         for (auto val : newExponents) {
-            y *= static_cast<std::size_t>(std::pow(fB[i], val));
-            i++;
+            y *= static_cast<std::size_t>(std::pow(fB[j], val));
+            y %= n;
+            j++;
         }
+        std::cout << "x: " << x << " y: " << y << std::endl;
 
-        if (x % n == y % n || x % n == (-y % n + n) % n) {
+        bmp::mpz_int factor = bmp::gcd(x + y, n);
+
+        if (factor == n || factor == 1) {
             std::cout << "bitch" << std::endl;
-            return std::vector<bmp::mpz_int>{};
+            continue;
         }
 
-        return std::vector<bmp::mpz_int>{bmp::gcd(x + y, n), bmp::gcd(x > y ? x - y : y - x, n)};
+        return std::vector<bmp::mpz_int>{factor, n / factor};
     }
+    return std::vector<bmp::mpz_int>{};
 }

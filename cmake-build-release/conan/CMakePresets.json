@@ -7,9 +7,9 @@
     },
     "configurePresets": [
         {
-            "name": "default",
-            "displayName": "Default Config",
-            "description": "Default configure using 'Unix Makefiles' generator",
+            "name": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>",
+            "displayName": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> Config",
+            "description": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>> configure using 'Unix Makefiles' generator",
             "generator": "Unix Makefiles",
             "cacheVariables": {},
             "toolchainFile": "/Users/jonathanlee/queen-snake/cmake-build-release/conan/conan_toolchain.cmake",
@@ -18,14 +18,14 @@
     ],
     "buildPresets": [
         {
-            "name": "default",
-            "configurePreset": "default"
+            "name": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>",
+            "configurePreset": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>"
         }
     ],
     "testPresets": [
         {
-            "name": "default",
-            "configurePreset": "default"
+            "name": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>",
+            "configurePreset": "Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>"
         }
     ]
 }

@@ -15,10 +15,10 @@ struct BSmoothSolution {
     bmp::mpz_int nDivisor;
     // size is numBSmoothSquares
     std::vector<bmp::mpz_int> bSmoothSquares;
-    Eigen::MatrixXi exponentMatrix;
-    Eigen::MatrixXi exponentMod2Matrix;
+    Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> exponentMatrix;
+    Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> exponentMod2Matrix;
 
-    BSmoothSolution(const bmp::mpz_int &nDivisor, const std::vector<bmp::mpz_int> &bSmoothSquares, const Eigen::MatrixXi &exponentMatrix, const Eigen::MatrixXi &exponentMod2Matrix);
+    BSmoothSolution(const bmp::mpz_int &nDivisor, const std::vector<bmp::mpz_int> &bSmoothSquares, const Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &exponentMatrix, const Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> &exponentMod2Matrix);
 };
 
 // add support for multiple finds
@@ -42,17 +42,17 @@ class BSmoothSquareFinder {
         bmp::mpz_int s;
         std::vector<std::size_t> factorBase;
         std::size_t piB;
-        // std::size_t iterations;
         std::size_t A;
+        bmp::mpz_int bSmoothBound;
 
-        std::vector<bmp::mpf_float_50> sieve;
+        std::vector<bmp::mpz_int> sieve;
         std::vector<std::size_t> primeExponentsLeqA;
         std::vector<QuadraticResidueSquareRoot> qrsrModP;
         std::vector<std::vector<std::size_t>> primePowers;
 
-        std::size_t currentCol;
-        Eigen::MatrixXi exponentMatrix;
-        Eigen::MatrixXi exponentMod2Matrix;
+        std::size_t currentRow;
+        Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> exponentMatrix;
+        Eigen::Matrix<int, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> exponentMod2Matrix;
 };
 
 #endif

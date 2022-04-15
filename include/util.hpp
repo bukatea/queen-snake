@@ -1,14 +1,18 @@
 #ifndef UTIL_HPP
 #define UTIL_HPP
 
+#include <boost/multiprecision/miller_rabin.hpp>
 #include <cstdint>
 #include <Eigen/Dense>
 #include <vector>
+#include <iostream>
 
 #include "common.hpp"
 
 // Sieve of Eratosthenes
 std::vector<std::size_t> factorBase(std::size_t B);
+
+bmp::mpz_int nextProbablePrime(std::size_t n);
 
 struct PrimeFactorization {
     Eigen::VectorXi exponents;
