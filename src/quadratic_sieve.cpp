@@ -14,8 +14,7 @@ std::vector<bmp::mpz_int> quadraticSieve(const bmp::mpz_int &n, std::size_t A, s
         std::cout << "fuck" << std::endl;
         return std::vector<bmp::mpz_int>{};
     } else {
-        Eigen::MatrixXf ker = solution.exponentMatrix.cast<float>().fullPivLu().kernel();
-        std::cout << ker << std::endl;
+        Eigen::MatrixXf ker = solution.exponentMod2Matrix.cast<float>().fullPivLu().kernel();
         Eigen::VectorXf firstSolution = ker.col(0);
 
         bmp::mpz_int x = 1;
@@ -23,8 +22,8 @@ std::vector<bmp::mpz_int> quadraticSieve(const bmp::mpz_int &n, std::size_t A, s
         Eigen::VectorXi newExponents = Eigen::VectorXi::Zero(piB);
         for (auto val : firstSolution) {
             if (val != 0) {
-                newExponents += Eigen::Map<Eigen::VectorXi>(&(solution.bSmoothSquares[i].primeFactors[0]), piB);
-                x *= solution.bSmoothSquares[i].x;
+                newExponents += solution.exponentMatrix.col(i);
+                x *= solution.bSmoothSquares[i];
             }
             i++;
         }

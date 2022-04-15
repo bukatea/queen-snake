@@ -1,6 +1,19 @@
-#include "tonelli_shanks.hpp"
+#include "quadratic_residue.hpp"
 
-QuadraticResidueSquareRoot::QuadraticResidueSquareRoot(const bmp::mpz_int &root1, const bmp::mpz_int &root2, bool exists) : root1(root1), root2(root2), exists(exists) {}
+QuadraticResidueSquareRoot::QuadraticResidueSquareRoot(const std::vector<bmp::mpz_int> &roots, bool exists) : roots(roots), exists(exists) {}
+
+QuadraticResidueSquareRoot::QuadraticResidueSquareRoot(const std::vector<bmp::mpz_int> &&roots, bool exists) : roots(std::move(roots)), exists(exists) {}
+
+QuadraticResidueSquareRoot trialSquareRoot(const bmp::mpz_int &n, std::size_t k) {
+    bmp::mpz_int residue = n % k;
+    std::vector<bmp::mpz_int> roots;
+    for (std::size_t i = 0; i < k; i++) {
+        if (i * i % k == residue) {
+            roots.emplace_back(i);
+        }
+    }
+    return QuadraticResidueSquareRoot(roots, !roots.empty());
+}
 
 QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p) {
     std::size_t q = p - 1;
@@ -10,7 +23,7 @@ QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p) {
     std::size_t m;
  
     if (bmp::powm(n, (p - 1) / 2, p) != 1) {
-        return QuadraticResidueSquareRoot(0, 0, false);
+        return QuadraticResidueSquareRoot();
     }
  
     while ((q & 1) == 0) {
@@ -20,7 +33,7 @@ QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p) {
  
     if (ss == 1) {
         bmp::mpz_int r1 = bmp::powm(n, (p + 1) / 4, p);
-        return QuadraticResidueSquareRoot(r1, p - r1, true);
+        return QuadraticResidueSquareRoot(std::vector<bmp::mpz_int>{r1, p - r1}, true);
     }
  
     while (bmp::powm(z, (p - 1) / 2, p) != p - 1) {
@@ -37,7 +50,7 @@ QuadraticResidueSquareRoot tonelliShanks(const bmp::mpz_int &n, std::size_t p) {
         bmp::mpz_int zz = t;
         bmp::mpz_int b = c;
         if (t == 1) {
-            return QuadraticResidueSquareRoot(r, p - r, true);
+            return QuadraticResidueSquareRoot(std::vector<bmp::mpz_int>{r, p - r}, true);
         }
         while (zz != 1 && i < (m - 1)) {
             zz = zz * zz % p;
