@@ -37,7 +37,6 @@ std::vector<bmp::mpz_int> quadraticSieve(const bmp::mpz_int &n, std::size_t A, s
         bmp::mpz_int factor = bmp::gcd(x + y, n);
 
         if (factor == n || factor == 1) {
-            std::cout << "bitch" << std::endl;
             continue;
         }
 
